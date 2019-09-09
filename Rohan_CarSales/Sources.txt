@@ -1,0 +1,20 @@
+[1]
+https://github.com/reigngt09/ARCore/blob/master/A_PointCloudandPlaneDetection/ARCore1.2
+Two components:
+i. PlaneVisualizationManager.cs: Script to detect planes
+ii. Grass texture
+
+
+[2]
+https://support.google.com/poly/answer/7418679
+Car model
+
+
+[3]
+https://poly.google.com/view/9LWRzO0zPF8
+BMW model
+
+
+[4]
+https://poly.google.com/view/bo-sm0KJW3w
+Steering wheel
