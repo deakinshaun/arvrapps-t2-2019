@@ -21,7 +21,7 @@ public class AccessOpenCV : MonoBehaviour
 
     public Camera ARCam;
 
-    public RawImage renderImage;
+    //public RawImage renderImage;
 
     private bool modelReady = false;
 
@@ -48,7 +48,6 @@ public class AccessOpenCV : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //renderTexCam.targetTexture = ARCamTex;
         if (Screen.width > Screen.height)
         {
             lanscapeARCamTex = new RenderTexture(Screen.width, Screen.height, 32);
@@ -150,7 +149,7 @@ public class AccessOpenCV : MonoBehaviour
         Texture2D image = new Texture2D(renderTexCam.targetTexture.width, renderTexCam.targetTexture.height, TextureFormat.RGBA32, false);
         image.ReadPixels(new Rect(0, 0, renderTexCam.targetTexture.width, renderTexCam.targetTexture.height), 0, 0);
         image.Apply();
-        renderImage.texture = image;
+        //renderImage.texture = image;
     }
     // Update is called once per frame
     void Update()
@@ -183,7 +182,7 @@ public class AccessOpenCV : MonoBehaviour
             Texture2D image = new Texture2D(renderTexCam.targetTexture.width, renderTexCam.targetTexture.height, TextureFormat.RGBA32, false);
             image.ReadPixels(new Rect(0, 0, renderTexCam.targetTexture.width, renderTexCam.targetTexture.height), 0, 0);
             image.Apply();
-            renderImage.texture = image;
+            //renderImage.texture = image;
 
             Debug.Log("11111111111111111111111111111111111111111111111");
             int numMatch = doRecognise(image.GetRawTextureData(), image.width, image.height);
@@ -210,14 +209,5 @@ public class AccessOpenCV : MonoBehaviour
         if (transform.gameObject.activeSelf == true)
             transform.gameObject.SetActive(false);
         else transform.gameObject.SetActive(true);
-    }
-    public void DropBox()
-    {
-        //text.text = "ARCam position: " + ARCam.transform.position + ARCam.po;
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = ARCam.transform.TransformPoint(0, 0, 0.5f);
-        cube.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        cube.AddComponent<Rigidbody>();
-        cube.GetComponent<Rigidbody>().AddForce(ARCam.transform.TransformDirection(0, 1f, 2f), ForceMode.Impulse);
     }
 }
