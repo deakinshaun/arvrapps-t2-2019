@@ -15,11 +15,7 @@ public class AccessOpenCV : MonoBehaviour
 
     public GameObject markerParent;
 
-    public RenderTexture ARCamTex;
-
     public Camera renderTexCam;
-
-    public Camera ARCam;
 
     //public RawImage renderImage;
 
@@ -28,10 +24,6 @@ public class AccessOpenCV : MonoBehaviour
     private float delayTime = 0.0f;
 
     public Text text;
-
-    private RenderTexture lanscapeARCamTex;
-
-    private RenderTexture portraitARCamTex;
 
     private string[] CLASSES = { "background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow",
         "diningtable", "dog", "horse", "motorbike", "person", "pottedplant","sheep", "sofa", "train", "tvmonitor" };
@@ -48,16 +40,6 @@ public class AccessOpenCV : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Screen.width > Screen.height)
-        {
-            lanscapeARCamTex = new RenderTexture(Screen.width, Screen.height, 32);
-            portraitARCamTex = new RenderTexture(Screen.height, Screen.width, 32);
-        }
-        else
-        {
-            portraitARCamTex = new RenderTexture(Screen.width, Screen.height, 32);
-            lanscapeARCamTex = new RenderTexture(Screen.height, Screen.width, 32);
-        }
         StartCoroutine(prepareModel());
     }
 
@@ -102,14 +84,6 @@ public class AccessOpenCV : MonoBehaviour
 
     private void addVisual(string name, float confidence, float sx, float sy, float ex, float ey)
     {
-        //GameObject g = GameObject.Instantiate(markerTemplate);
-        //g.transform.position = new Vector3(5.0f * (sx + ex) - 5.0f, -5.0f *(sy + ey) + 5.0f, 0);
-        //Debug.Log("position " + g.transform.position);
-        //g.transform.localScale = new Vector3(10.0f * Mathf.Abs(sx - ex),10.0f * Mathf.Abs(sy - ey), 0.1f);
-        //Debug.Log("localScale " + g.transform.localScale);
-        //g.GetComponentInChildren<TextMesh>().text = name + "\n" + confidence;
-        //g.transform.SetParent(markerParent.transform, false);
-
         GameObject g = Instantiate(markerTemplate);
         g.GetComponent<RectTransform>().anchoredPosition = new Vector2(Screen.width * sx, Screen.height * (1-ey));
         Debug.Log("x position " + Screen.width * sx + "," + "y position" + Screen.height * (1-sy));
@@ -133,24 +107,6 @@ public class AccessOpenCV : MonoBehaviour
         g.transform.GetChild(1).GetComponent<Text>().text = distanceMeters + "m";
     }
 
-    public void test()
-    {
-        //Debug.Log("Test");
-        //GameObject g = Instantiate(markerTemplate);
-        //g.GetComponent<RectTransform>().anchoredPosition = new Vector2(1000, 500);
-        //g.transform.SetParent(markerParent.transform, false);
-        Debug.Log("Screen.width " + Screen.width + "," + Screen.height + "Screen.height");
-        if (Screen.width > Screen.height)
-            renderTexCam.targetTexture = lanscapeARCamTex;
-        else renderTexCam.targetTexture = portraitARCamTex;
-        RenderTexture.active = renderTexCam.targetTexture;
-        renderTexCam.Render();
-        //renderImage.texture = ARCamTex;
-        Texture2D image = new Texture2D(renderTexCam.targetTexture.width, renderTexCam.targetTexture.height, TextureFormat.RGBA32, false);
-        image.ReadPixels(new Rect(0, 0, renderTexCam.targetTexture.width, renderTexCam.targetTexture.height), 0, 0);
-        image.Apply();
-        //renderImage.texture = image;
-    }
     // Update is called once per frame
     void Update()
     {
@@ -160,29 +116,12 @@ public class AccessOpenCV : MonoBehaviour
             clearVisuals();
             delayTime = 0.0f;
 
-            //Texture2D image = new Texture2D(cameraMaterial.mainTexture.width, cameraMaterial.mainTexture.height, TextureFormat.RGBA32, false);
-            //RenderTexture renderTexture = new RenderTexture(cameraMaterial.mainTexture.width, cameraMaterial.mainTexture.height, 32);
-            //Graphics.Blit(cameraMaterial.mainTexture, renderTexture);
-            //RenderTexture.active = renderTexture;
-            //image.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-            //image.Apply();
-            //ARCamTex.width = Screen.width;
-            //ARCamTex.height = Screen.height;
-
             Debug.Log("Screen.width " + Screen.width + "," + Screen.height + "Screen.height");
-            //RenderTexture ARCamTex = new RenderTexture(Screen.width, Screen.height, 32);
-            //if (Screen.width > Screen.height)
-            //    renderTexCam.targetTexture = lanscapeARCamTex;
-            //else renderTexCam.targetTexture = portraitARCamTex;
-            //renderTexCam.targetTexture = ARCamTex;
             RenderTexture.active = renderTexCam.targetTexture;
-            //renderTexCam.Render();
 
-            //renderImage.SetNativeSize();
             Texture2D image = new Texture2D(renderTexCam.targetTexture.width, renderTexCam.targetTexture.height, TextureFormat.RGBA32, false);
             image.ReadPixels(new Rect(0, 0, renderTexCam.targetTexture.width, renderTexCam.targetTexture.height), 0, 0);
             image.Apply();
-            //renderImage.texture = image;
 
             Debug.Log("11111111111111111111111111111111111111111111111");
             int numMatch = doRecognise(image.GetRawTextureData(), image.width, image.height);
