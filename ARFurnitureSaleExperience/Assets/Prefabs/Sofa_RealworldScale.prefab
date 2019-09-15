@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4520097168263101055}
   - component: {fileID: 4509837114434471349}
   - component: {fileID: 4477742746262578855}
+  - component: {fileID: 771810427461870191}
   m_Layer: 0
   m_Name: SofaModern_Fabric
-  m_TagString: Untagged
+  m_TagString: furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4523743639365716045}
   m_LocalRotation: {x: 0, y: 0.64278764, z: 0.7660445, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children: []
   m_Father: {fileID: 4007676025711825023}
   m_RootOrder: 0
@@ -89,9 +90,25 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 1e50ca720bdacbd4a9f1e06fcb946c12, type: 3}
+--- !u!54 &771810427461870191
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523743639365716045}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: Infinity
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7618877723752209637
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,8 +120,8 @@ GameObject:
   - component: {fileID: 4007676025711825023}
   - component: {fileID: 5046922997070651398}
   m_Layer: 0
-  m_Name: Sofa
-  m_TagString: Untagged
+  m_Name: Sofa_RealworldScale
+  m_TagString: furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
