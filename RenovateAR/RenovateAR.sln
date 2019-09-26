@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenovateAR", "Assembly-CSharp.csproj", "{5794DAC7-84A8-6A0B-A88E-3DFAA1E6B5B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenovateAR", "Assembly-CSharp-Editor.csproj", "{D62EBF20-DDA4-12D2-88DD-FDAF5C8454FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5794DAC7-84A8-6A0B-A88E-3DFAA1E6B5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5794DAC7-84A8-6A0B-A88E-3DFAA1E6B5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5794DAC7-84A8-6A0B-A88E-3DFAA1E6B5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5794DAC7-84A8-6A0B-A88E-3DFAA1E6B5B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D62EBF20-DDA4-12D2-88DD-FDAF5C8454FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D62EBF20-DDA4-12D2-88DD-FDAF5C8454FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D62EBF20-DDA4-12D2-88DD-FDAF5C8454FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D62EBF20-DDA4-12D2-88DD-FDAF5C8454FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
