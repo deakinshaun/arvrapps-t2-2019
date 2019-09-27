@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine; 
+using UnityEngine.SceneManagement; 
+
 using UnityEngine.UI;
 using Leap.Unity;
 using Leap;
 public class HandInformationSink : MonoBehaviour{
 [Tooltip ("The hand model to work with.")]
 public HandModelBase hand;
+public GameObject fpsText;
 [Tooltip("A cylindricalbeam object attached to the controller.")]
 public GameObject laserBeam;
 [Tooltip("An adjustment factor forhow fast objectsblow up.")]
@@ -16,17 +19,23 @@ public AudioSource hiss;
 [Tooltip("A sound effect played when the object is destroyed.")]
 public AudioSource pop;// The laser is switched on when the correct gesture is performed
 public bool beamActive;// Link to the network functions.
+public int flagz=0;
 
+public Text message;
 private DatagramCommunication dc;
 public void setLaserActive (bool value){beamActive = value;}
+public void setLaserActives (){   			fpsText.GetComponent<TextMesh>().text = "scenecalled";
+ SceneManager.LoadScene("HelloAR");}
 void Start(){
 dc =new DatagramCommunication();
 hand.BeginHand();}
+
 void Update(){// decay hiss so it stops if no button is pressed.
 	Debug.Log("gug");
 	if(hiss !=null) { hiss.volume *= 0.9f; }
-	HandDetails cd = dc.receiveHandDetails();
+	HandDetails cd = dc.receiveHandDetails(message);
 	if(cd !=null){
+	message.text = "Got message " + Time.time + " " + cd.hand.Fingers[(int)Finger.FingerType.TYPE_INDEX].Bone(Bone.BoneType.TYPE_DISTAL).Center;
 		hand.SetLeapHand(cd.hand);
 		hand.UpdateHand();
 		Debug.Log("werwr");

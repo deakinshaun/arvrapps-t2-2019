@@ -15,5 +15,6 @@ void Start()
 dc =new DatagramCommunication ();
 }
 void Update () {
+	Debug.Log ("Sending " + hostname + " ");
 dc.sendHandDetails (hostname,new HandDetails (hand));
 }}
