@@ -1,0 +1,30 @@
+3D Assets Licence
+=================
+
+1.Sponza 3D Assets
+MIT License
+
+Copyright (c) 2018 Guidev (https://www.youtube.com/channel/UCIc3KVWITHdbQ-9SJcG1_vw)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+2.Licence Type : CC-BY Licence Name : Creative Commons CC-BY 3.0 Attribution : Poly by google Uses : Free to use and need to give credit to author Original File Name : Sofa_01.obj Model Name in project folder : Sofa_01.obj Model URL in project folder : Assets/ARWorld/3D/Sofa_01.obj Author : Poly by google (https://poly.google.com/view/bwd4gui4RZ4)
+3.Licence Type : CC-BY Licence Name : Creative Commons CC-BY 3.0 Attribution : Blocks Demo Uses : Free to use and need to give credit to author Original File Name : Lightsaber.obj Model Name in project folder : model.obj Model URL in project folder : Assets/ARWorld/3D/model.obj Author : Blocks Demo (https://poly.google.com/view/fd-kNrLQ5i2)
+4.Licence Type : CC-BY Licence Name : Creative Commons CC-BY 3.0 Attribution : Danny Bittman Uses : Free to use and need to give credit to author Original File Name : model.obj Model Name in project folder : model1.obj Model URL in project folder : Assets/ARWorld/3D/model1.obj Author : Danny Bittman (https://poly.google.com/view/7IxmR5JQXyC)
+5.Licence Type : CC-BY Licence Name : Creative Commons CC-BY 3.0 Attribution : Poly by google Uses : Free to use and need to give credit to author Original File Name : Table_Large_Rectangular_01.obj Model Name in project folder : Table_Large_Rectangular_01.obj Model URL in project folder : Assets/ARWorld/3D/Table_Large_Rectangular_01.obj Author : Poly by google (https://poly.google.com/view/8cnrwlAWqx7)

@@ -48,6 +48,7 @@ Source Code Content:
 Assets			- All the assets of the application is inside that folder.
 AUTHORS.txt		- Authors of RenovateAR application
 Library			- Asset database, cahce, and other assets inside that folder.
+LICENCE.txt		- All assets licence.
 obj			- Debug log inside that.
 Packages		- manifest.jsno file keeps the packages list.
 ProjectSetting		- all the manager files inside that.
