@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VR;
+
 using UnityEngine.UI;
+	using UnityEngine.SceneManagement;
+
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
@@ -9,13 +13,14 @@ using System.IO;
 using System;
 
 public class SpeechRecognitionREST : MonoBehaviour
-{
+{public GameObject fpsText;
+	
     private string subscriptionKey = "8ed072c0330849aa966ede8715dba75c";
     private string token;
     public Text debug;
 
     // length of any recording sent. 10 s is the current limit.
-    private int recordDuration = 3;
+    private int recordDuration = 1;
 
 
 private static bool TrustCertificate(object sender, X509Certificate x509Certificate, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
@@ -30,24 +35,16 @@ private static bool TrustCertificate(object sender, X509Certificate x509Certific
 
     void Start()
 
-    {
+    {Trigger();
 
         ServicePointManager.ServerCertificateValidationCallback = TrustCertificate;
-        
+		UnityEngine.XR.XRSettings.enabled=false;
     }
 
     private void Update()
-    {
-        if (Input.anyKeyDown)
-        {
-
-            Trigger();
-        } 
-    }
-
-
-    // Not really needed, but useful to test access to service.
-
+    {	
+// Not really needed, but useful to test access to service.
+	}
     public void Authentication()
     {
 
@@ -75,15 +72,18 @@ private static bool TrustCertificate(object sender, X509Certificate x509Certific
     }
 
     public void SpeechToText(byte[] wavData)
-    {
+    {	fpsText.GetComponent<TextMesh>().text ="1";
+
 
         // Send the request to the service.
 
         string fetchUri = "https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1";
+	fpsText.GetComponent<TextMesh>().text ="2";
 
         // HttpWebRequest request = (HttpWebRequest)WebRequest.Create(fetchUri + "?language=en-US&format=detailed");
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(fetchUri + "?language=en-US&format=simple");
         request.ContentType = "application/x-www-form-urlencoded";
+	fpsText.GetComponent<TextMesh>().text ="3";
 
         request.Method = "POST";
 
@@ -91,28 +91,28 @@ private static bool TrustCertificate(object sender, X509Certificate x509Certific
 
         request.Headers["Ocp-Apim-Subscription-Key"] = subscriptionKey;
 
-       
+       	fpsText.GetComponent<TextMesh>().text ="4";
+
         Stream rs = request.GetRequestStream();
         rs.Write(wavData, 0, wavData.Length);
         rs.Close();
+       	fpsText.GetComponent<TextMesh>().text ="5";
 
         var response = (HttpWebResponse)request.GetResponse();
+       	fpsText.GetComponent<TextMesh>().text ="6";
 
         var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+       	fpsText.GetComponent<TextMesh>().text ="7";
 
-        Debug.Log("Responsefrom service: " + responseString); //response string is full detailed response //json parser to put out the field needed
-                                                              //check if 'up' is somewhere inn the response.
-
-
-
-        debug.text = "Response from service: " + responseString;
-
+       
+	fpsText.GetComponent<TextMesh>().text =responseString.ToString();
         //REFER THIS FOR EXTRACTING WORDS NEEDED
-        if(responseString.Contains("Up"))
+        if(responseString.Contains("And"))
         {
             Debug.Log("Key Detected");
-            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.position = new Vector3(0, 0.5f, 0);
+ SceneManager.LoadScene("surround");
+								fpsText.GetComponent<TextMesh>().text ="I am your assistant";
+	
         }
         //Canvas.GetDefaultCanvasTextMaterial.SpeechToText = 
 
@@ -140,6 +140,7 @@ private IEnumerator recordAudio()
         // Convert it to a wav file, and up load to the service.
 
         byte[] wavData = ConvertToWav(audio);
+	fpsText.GetComponent<TextMesh>().text ="going to convert";
 
         SpeechToText(wavData);
     }

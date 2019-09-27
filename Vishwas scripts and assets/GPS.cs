@@ -1,10 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoogleARCore;
 
 	public class GPS : MonoBehaviour
     {
+public GameObject g;
+public GameObject fpsText;
+private List<AugmentedImage> trackedImages=new List<AugmentedImage>();
+void Start(){}
+void Update(){	
+	g.SetActive(false);
+	Session.GetTrackables<AugmentedImage>(trackedImages,TrackableQueryFilter.All); 
+	foreach(var image in trackedImages){		
+fpsText.GetComponent<TextMesh>().text = "sdf";
+	if(image.TrackingState==TrackingState.Tracking){ 
+		g.transform.position=image.CenterPose.position;
+		g.transform.rotation = image.CenterPose.rotation;
+			fpsText.GetComponent<TextMesh>().text = g.transform.position.ToString();
 
+		g.SetActive(true);}}
+}
     /*
 	*   Retrieve   the   location   from  the   location   service,   typically   using   GPS
 ,	Returns   true

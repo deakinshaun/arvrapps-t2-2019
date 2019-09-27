@@ -5,6 +5,7 @@
 
 public class Retrieveloc : MonoBehaviour
 {
+public GameObject fpsText;
 
     public GPS locationService;
 
@@ -20,8 +21,11 @@ public class Retrieveloc : MonoBehaviour
       longitude, out altitude, out timestamp))
         {
             displayText.GetComponent<TextMesh>().text = "Lat:   " + latitude;
+			//fpsText.GetComponent<TextMesh>().text ="eess";
         }
-        else { 
+        else {
+			//		fpsText.GetComponent<TextMesh>().text ="olo";
+
             displayText.GetComponent<TextMesh>().text = "No location";
     }
 }
