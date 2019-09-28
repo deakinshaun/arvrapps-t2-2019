@@ -192,6 +192,7 @@ namespace GoogleARCoreInternal
             var result =
                 ExternApi.ArSession_hostAndAcquireNewCloudAnchor(
                     m_NativeSession.SessionHandle, platformAnchorHandle, ref cloudAnchorHandle);
+            Debug.Log("result:" + result);
             return result;
         }
 

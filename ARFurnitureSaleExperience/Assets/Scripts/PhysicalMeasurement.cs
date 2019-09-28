@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleARCore;
+using GoogleARCore.Examples.CloudAnchors;
 
 public class PhysicalMeasurement : MonoBehaviour
 {
     //public Button MeasureConfirm;
     public GameObject distanceDisplayPrefab;
     public GameObject measureLinePrefab;
-    private GameObject currentDisplay;
+    public ARCoreWorldOriginHelper ARCoreWorldOriginHelper;
+    private GameObject currentLabel;
     private List<LineRenderer> lines = new List<LineRenderer>();
+    private List<GameObject> labels = new List<GameObject>();
     private LineRenderer currentLine;
     private TrackableHit startPoint;
     private TrackableHit endPoint;
@@ -29,30 +32,32 @@ public class PhysicalMeasurement : MonoBehaviour
     {
         if (isMeasuring)
         {
-            Frame.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, raycastFilter, out endPoint);
+            ARCoreWorldOriginHelper.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, raycastFilter, out endPoint);
             currentLine.SetPosition(1, endPoint.Pose.position + new Vector3(0,offset,0));
             //get the distance
             float dx = startPoint.Pose.position.x - endPoint.Pose.position.x;
             float dy = startPoint.Pose.position.y - endPoint.Pose.position.y;
             float dz = startPoint.Pose.position.z - endPoint.Pose.position.z;
             float distanceMeters = (float)Mathf.Sqrt(dx * dx + dy * dy + dz * dz);
-            currentDisplay.transform.position = new Vector3((startPoint.Pose.position.x + endPoint.Pose.position.x) / 2,
+            currentLabel.transform.position = new Vector3((startPoint.Pose.position.x + endPoint.Pose.position.x) / 2,
                 (startPoint.Pose.position.y + endPoint.Pose.position.y) / 2 + offset,
                 (startPoint.Pose.position.z + endPoint.Pose.position.z) / 2);
-            currentDisplay.transform.rotation.SetFromToRotation(startPoint.Pose.position, endPoint.Pose.position);
-            currentDisplay.GetComponentInChildren<Text>().text = $"{distanceMeters:F2} m";
+            currentLabel.transform.rotation.SetFromToRotation(startPoint.Pose.position, endPoint.Pose.position);
+            currentLabel.GetComponentInChildren<Text>().text = $"{distanceMeters:F2} m";
         }
     }
 
     public void Measure()
     {
+        //Debug.Log(lines);
         if (!isMeasuring)
         {
             currentLine = Instantiate(measureLinePrefab).GetComponent<LineRenderer>();
-            lines.Add(currentLine);            
+            lines.Add(currentLine);
             //cast a ray from center screen to the detected plane
-            Frame.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, raycastFilter, out startPoint);
-            currentDisplay = Instantiate(distanceDisplayPrefab, startPoint.Pose.position, Quaternion.Euler(90,0,0));
+            ARCoreWorldOriginHelper.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, raycastFilter, out startPoint);
+            currentLabel = Instantiate(distanceDisplayPrefab, startPoint.Pose.position, Quaternion.Euler(90,0,0));
+            labels.Add(currentLabel);
             currentLine.SetPosition(0, startPoint.Pose.position + new Vector3(0,offset,0));
             isMeasuring = true;
             //MeasureConfirm.GetComponentInChildren<Text>().text = "End";
@@ -79,5 +84,19 @@ public class PhysicalMeasurement : MonoBehaviour
             //MeasureConfirm.gameObject.SetActive(true);
             //distanceText.gameObject.SetActive(true);
         }
+    }
+
+    public void ClearLines()
+    {
+        foreach (var line in lines)
+        {
+            Destroy(line.gameObject);
+        }
+        lines.Clear();
+        foreach (var label in labels)
+        {
+            Destroy(label);
+        }
+        labels.Clear();
     }
 }

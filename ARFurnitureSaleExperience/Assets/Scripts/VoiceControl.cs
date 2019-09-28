@@ -19,7 +19,7 @@ public class TextResponse
 
 public class VoiceControl : MonoBehaviour
 {
-    private string subscriptionKey = "6102d03447c84cf0b7fdde2dd4ac589e";
+    private string subscriptionKey = "7cbc5039c88d4b019f1e80c4a070be2e";
     private string token;
 
     //private float shakeDetectionThreshold = 1.5f;
@@ -31,8 +31,18 @@ public class VoiceControl : MonoBehaviour
 
     public GameObject recordButton;
 
-    public Button scanImage;
-    public Button furniture;
+    //controllable button via voice
+    public Button scanImageButton;
+    public Button furnitureButton;
+    public Button openCollectionButton;
+    public Button sofaButton;
+    public Button chairButton;
+    public Button placeButton;
+    public Button measureButton;
+    public Button clearButton;
+    public Button gridButton;
+    public Button selectButton;
+    public Button deleteButton;
 
     // length of any recording sent. 10 s is the current limit.
     private int recordDuration = 2;
@@ -48,27 +58,6 @@ public class VoiceControl : MonoBehaviour
         ServicePointManager.ServerCertificateValidationCallback = TrustCertificate;
     }
 
-    // Not really needed , but useful to test access to service.
-    //public void Authentication()
-    //{
-    //    Debug.Log("Authentication");
-    //    // Unity webforms do not handle the certificates required for https servers.
-
-    //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken");
-    //    request.ContentType = "application/x-www-form-urlencoded";
-    //    request.Method = "POST";
-    //    request.Headers["Ocp-Apim-Subscription-Key"] = subscriptionKey;
-
-    //    Debug.Log("Sending request");
-
-    //    var response = (HttpWebResponse)request.GetResponse();
-
-    //    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-    //    Debug.Log("Token received: " + responseString);
-
-    //    token = responseString;
-    //}
-
     public void SpeechToText(byte[] wavData)
     {
         Debug.Log("Unity SpeechToText time" + Time.time);
@@ -80,19 +69,6 @@ public class VoiceControl : MonoBehaviour
         request.ContentType = "audio/wav; codecs=audio/pcm; samplerate=16000";
         request.Headers["Ocp-Apim-Subscription-Key"] = subscriptionKey;
 
-        // Read a wav file off the filesystem and send that to the service. Note that the paths
-        // used may not working when packaged for a mobile platform. This is useful for testing
-        // under controlled and repeatable conditions (same input file each time).
-        //
-        // Stream rs = request. GetRequestStream();
-        // FileStream fileStream = new FileStream(Application.dataPath + "/SpeechRecognition/Sound/untitled.wav", FileMode.Open , FileAccess.Read);
-        // byte[] buffer = new byte [4096];
-        // int bytesRead = 0;
-        // while ((bytesRead = fileStream.Read(buffer , 0, buffer.Length)) != 0) {
-        // rs.Write(buffer , 0, bytesRead);
-        // }
-        // fileStream.Close();
-        // rs.Close();
         Debug.Log("Before write wav to request time" + Time.time);
         Stream rs = request.GetRequestStream();
         rs.Write(wavData, 0, wavData.Length);
@@ -116,11 +92,47 @@ public class VoiceControl : MonoBehaviour
         Debug.Log("OnVoiceCommandResponse: " + command);
         if (command.ToLower().Contains("scan"))
         {
-            scanImage.onClick.Invoke();
+            if (scanImageButton.gameObject.activeSelf) scanImageButton.onClick.Invoke();
         }
         if (command.ToLower().Contains("furniture"))
         {
-            furniture.onClick.Invoke();
+            if (furnitureButton.gameObject.activeSelf) furnitureButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("collection"))
+        {
+            if (openCollectionButton.gameObject.activeSelf) openCollectionButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("sofa"))
+        {
+            if (sofaButton.gameObject.activeSelf) sofaButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("chair"))
+        {
+            if (chairButton.gameObject.activeSelf) chairButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("place"))
+        {
+            if (placeButton.gameObject.activeSelf) placeButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("select"))
+        {
+            if (selectButton.gameObject.activeSelf) selectButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("destroy"))
+        {
+            if (deleteButton.gameObject.activeSelf) deleteButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("measure"))
+        {
+            if (measureButton.gameObject.activeSelf) measureButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("clear"))
+        {
+            if (clearButton.gameObject.activeSelf) clearButton.onClick.Invoke();
+        }
+        if (command.ToLower().Contains("surface"))
+        {
+            if (gridButton.gameObject.activeSelf) gridButton.onClick.Invoke();
         }
     }
     private IEnumerator recordAudio()
@@ -136,10 +148,10 @@ public class VoiceControl : MonoBehaviour
         Microphone.End(null);
         recordButton.GetComponent<Button>().interactable = true;
         recordButton.GetComponent<Image>().enabled = false;
-        // Play the recording back , to validate it was recorded correctly.
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.clip = audio;
-        audioSource.Play();
+        //// Play the recording back , to validate it was recorded correctly.
+        //AudioSource audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = audio;
+        //audioSource.Play();
 
         // Convert it to a wav file , and upload to the service.
         byte[] wavData = ConvertToWav(audio);

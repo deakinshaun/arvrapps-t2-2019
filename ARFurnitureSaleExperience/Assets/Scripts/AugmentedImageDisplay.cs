@@ -8,6 +8,7 @@ public class AugmentedImageDisplay : MonoBehaviour
     //public GameObject [] displayObjectPrefabs = new GameObject[2];
     public GameObject[] displayObjects = new GameObject[2];
     private List<AugmentedImage> trackedImages = new List<AugmentedImage>();
+    //public AugmentedImageDatabase augmentedimagedatabase;
     //private List<AugmentedImage> updatedTrackedImages = new List<AugmentedImage>();
     //private Dictionary<int, GameObject> m_Visualizers = new Dictionary<int, GameObject>();
     // Start is called before the first frame update
@@ -44,13 +45,24 @@ public class AugmentedImageDisplay : MonoBehaviour
         //        GameObject.Destroy(visualizer);
         //    }
         //}
-        Session.GetTrackables<AugmentedImage>(trackedImages, TrackableQueryFilter.Updated);
+        //Debug.Log("update 111111111111");
+        //debug purpose
+        //for (int i = 0; i < 2; i++)
+        //{
+        //    Debug.Log("Game Oject " + i + " position " + displayObjects[i].transform.position + " rotation " + displayObjects[i].transform.rotation);
+        //}
+        Session.GetTrackables<AugmentedImage>(trackedImages, TrackableQueryFilter.All);
         foreach (var image in trackedImages)
         {
+            int index = image.DatabaseIndex;
+            //Debug.Log("Image index" + index);
+            //Debug.Log("TrackingState " + image.TrackingState);
             if (image.TrackingState == TrackingState.Tracking)
             {
-                int index = image.DatabaseIndex;
-                Debug.Log("Image index" + index);
+                //int index = image.DatabaseIndex;
+                //Debug.Log("Image index" + index);
+                //Debug.Log("Image pose: " + image.CenterPose.position + " rotation " + image.CenterPose.rotation);
+           
                 displayObjects[index].transform.position = image.CenterPose.position;
                 displayObjects[index].transform.rotation = image.CenterPose.rotation;
                 displayObjects[index].SetActive(true);
@@ -60,11 +72,13 @@ public class AugmentedImageDisplay : MonoBehaviour
 
     public void TurnOn()
     {
+        Debug.Log("TurnOn");
         transform.gameObject.SetActive(true);
     }
 
     public void TurnOff()
     {
+        Debug.Log("TurnOff");
         foreach (var displayObject in displayObjects)
         {
             displayObject.SetActive(false);

@@ -45,6 +45,7 @@ namespace GoogleARCore.Examples.Common
         /// </summary>
         public void Update()
         {
+            Debug.Log("DetectedPlaneGenerator");
             // Check that motion tracking is tracking.
             if (Session.Status != SessionStatus.Tracking)
             {
@@ -61,7 +62,7 @@ namespace GoogleARCore.Examples.Common
                 // prefab is updated in Unity World coordinates.
                 GameObject planeObject =
                     Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
-                planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
+                planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i], true);
             }
         }
     }

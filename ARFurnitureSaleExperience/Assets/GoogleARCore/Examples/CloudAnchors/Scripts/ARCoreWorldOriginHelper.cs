@@ -64,6 +64,9 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// </summary>
         private Transform m_AnchorTransform;
 
+        //linh add
+        public bool m_isDisplayPlane = true;
+
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
@@ -87,7 +90,10 @@ namespace GoogleARCore.Examples.CloudAnchors
                 // prefab is updated in Unity World coordinates.
                 GameObject planeObject = Instantiate(
                     DetectedPlanePrefab, worldPose.position, worldPose.rotation, transform);
-                planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i]);
+                planeObject.GetComponent<DetectedPlaneVisualizer>().Initialize(m_NewPlanes[i], m_isDisplayPlane);
+                ////linh add
+                //if (m_isDisplayPlane) planeObject.GetComponent<MeshRenderer>().enabled = true;
+                //else planeObject.GetComponent<MeshRenderer>().enabled = false;
 
                 if (!m_IsOriginPlaced)
                 {
@@ -180,6 +186,12 @@ namespace GoogleARCore.Examples.CloudAnchors
                 anchorTWorld.GetColumn(2), anchorTWorld.GetColumn(1));
 
             return new Pose(position, rotation);
+        }
+
+        public void ToggleDisplayPlane()
+        {
+            Debug.Log("ToggleDisplayPlane");
+            m_isDisplayPlane = !m_isDisplayPlane;
         }
     }
 }

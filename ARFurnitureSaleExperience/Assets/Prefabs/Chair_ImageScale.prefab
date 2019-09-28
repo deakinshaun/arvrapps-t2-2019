@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8954095777940724666}
   - component: {fileID: 1761762218022163691}
   m_Layer: 0
-  m_Name: Chair
+  m_Name: Chair_ImageScale
   m_TagString: furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -50,6 +50,7 @@ namespace GoogleARCoreInternal.CrossPlatform
         public GoogleARCore.AsyncTask<CloudAnchorResult> CreateCloudAnchor(
             GoogleARCore.Anchor anchor)
         {
+            //Debug.Log("1111111111111111111111");
             Action<CloudAnchorResult> onComplete;
             GoogleARCore.AsyncTask<CloudAnchorResult> task;
             if (!_CreateCloudAnchorResultAsyncTask(out onComplete, out task))
@@ -152,6 +153,7 @@ namespace GoogleARCoreInternal.CrossPlatform
         protected internal void _CreateAndTrackCloudAnchorRequest(IntPtr cloudAnchorHandle,
             Action<CloudAnchorResult> onComplete, String cloudAnchorId = null)
         {
+            ///Debug.Log("333333333333333333333333333333333333");
             if (LifecycleManager.Instance.NativeSession == null || cloudAnchorHandle == IntPtr.Zero)
             {
                 Debug.LogError("Cannot create cloud anchor request when NativeSession is null or " +
@@ -186,6 +188,7 @@ namespace GoogleARCoreInternal.CrossPlatform
         protected internal void _CreateCloudAnchor(Action<CloudAnchorResult> onComplete,
             IntPtr anchorNativeHandle)
         {
+            //Debug.Log("2222222222222222222222222222222");
             IntPtr cloudAnchorHandle = IntPtr.Zero;
             var status = LifecycleManager.Instance.NativeSession.SessionApi
                 .CreateCloudAnchor(anchorNativeHandle, out cloudAnchorHandle);

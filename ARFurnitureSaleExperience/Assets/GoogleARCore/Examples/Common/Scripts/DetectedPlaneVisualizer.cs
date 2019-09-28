@@ -23,6 +23,7 @@ namespace GoogleARCore.Examples.Common
     using System.Collections.Generic;
     using GoogleARCore;
     using UnityEngine;
+    using GoogleARCore.Examples.CloudAnchors;
 
     /// <summary>
     /// Visualizes a single DetectedPlane in the Unity scene.
@@ -44,6 +45,8 @@ namespace GoogleARCore.Examples.Common
 
         private MeshRenderer m_MeshRenderer;
 
+        private bool m_isDisplayPlane;
+
         /// <summary>
         /// The Unity Awake() method.
         /// </summary>
@@ -58,18 +61,23 @@ namespace GoogleARCore.Examples.Common
         /// </summary>
         public void Update()
         {
+            m_isDisplayPlane = GetComponentInParent<ARCoreWorldOriginHelper>().m_isDisplayPlane;
+            //Debug.Log("Detected Plane Visualizer update");
             if (m_DetectedPlane == null)
             {
+                //Debug.Log("11111111111");
                 return;
             }
             else if (m_DetectedPlane.SubsumedBy != null)
             {
+                //Debug.Log("2222222222");
                 Destroy(gameObject);
                 return;
             }
-            else if (m_DetectedPlane.TrackingState != TrackingState.Tracking)
+            else if ((m_DetectedPlane.TrackingState != TrackingState.Tracking) || (!m_isDisplayPlane))
             {
-                 m_MeshRenderer.enabled = false;
+                //Debug.Log("333333333");
+                m_MeshRenderer.enabled = false;
                  return;
             }
 
@@ -82,8 +90,11 @@ namespace GoogleARCore.Examples.Common
         /// Initializes the DetectedPlaneVisualizer with a DetectedPlane.
         /// </summary>
         /// <param name="plane">The plane to vizualize.</param>
-        public void Initialize(DetectedPlane plane)
+        public void Initialize(DetectedPlane plane, bool isDisplayPlane)
         {
+            
+            m_isDisplayPlane = isDisplayPlane;
+            Debug.Log("Initialize m_isDisplayPlane " + m_isDisplayPlane);
             m_DetectedPlane = plane;
             m_MeshRenderer.material.SetColor("_GridColor", Color.white);
             m_MeshRenderer.material.SetFloat("_UvRotation", Random.Range(0.0f, 360.0f));

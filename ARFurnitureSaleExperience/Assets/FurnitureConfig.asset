@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: FurnitureConfig
   m_EditorClassIdentifier: 
   MatchCameraFramerate: 1
-  PlaneFindingMode: 1
-  LightEstimationMode: 0
-  EnableCloudAnchor: 0
+  PlaneFindingMode: 2
+  LightEstimationMode: 1
+  EnableCloudAnchor: 1
   AugmentedImageDatabase: {fileID: 11400000, guid: d083ad116f1e62f4396692dd99442ca1,
     type: 2}
   CameraFocusMode: 1

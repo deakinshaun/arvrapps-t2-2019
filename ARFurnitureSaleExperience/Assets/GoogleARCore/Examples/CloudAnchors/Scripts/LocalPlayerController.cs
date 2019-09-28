@@ -33,12 +33,14 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// <summary>
         /// The Star model that will represent networked objects in the scene.
         /// </summary>
-        public GameObject StarPrefab;
+        //public GameObject StarPrefab;
 
         /// <summary>
         /// The Anchor model that will represent the anchor in the scene.
         /// </summary>
-        public GameObject AnchorPrefab;
+        //public GameObject AnchorPrefab;
+
+        public GameObject[] furniturePrefab = new GameObject[2];
 
         /// <summary>
         /// The Unity OnStartLocalPlayer() method.
@@ -58,10 +60,12 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// <param name="position">Position of the object to be instantiated.</param>
         /// <param name="rotation">Rotation of the object to be instantiated.</param>
         /// <param name="anchor">The ARCore Anchor to be hosted.</param>
-        public void SpawnAnchor(Vector3 position, Quaternion rotation, Component anchor)
+        public void SpawnAnchor(Vector3 position, Quaternion rotation, Component anchor, int prefabIndex)
         {
             // Instantiate Anchor model at the hit pose.
-            var anchorObject = Instantiate(AnchorPrefab, position, rotation);
+            //var anchorObject = Instantiate(furniturePrefab[prefabIndex], position, rotation);
+
+            var anchorObject = Instantiate(furniturePrefab[prefabIndex], position, rotation);
 
             // Anchor must be hosted in the device.
             anchorObject.GetComponent<AnchorController>().HostLastPlacedAnchor(anchor);
@@ -81,15 +85,22 @@ namespace GoogleARCore.Examples.CloudAnchors
 #pragma warning disable 618
         [Command]
 #pragma warning restore 618
-        public void CmdSpawnStar(Vector3 position, Quaternion rotation)
+        public void CmdSpawnStar(Vector3 position, Quaternion rotation, int prefabIndex)
         {
             // Instantiate Star model at the hit pose.
-            var starObject = Instantiate(StarPrefab, position, rotation);
+            var starObject = Instantiate(furniturePrefab[prefabIndex], position, rotation);
 
             // Spawn the object in all clients.
 #pragma warning disable 618
             NetworkServer.Spawn(starObject);
 #pragma warning restore 618
+        }
+
+        [Command]
+        public void CmdDestroyObject(GameObject gameObject)
+        {
+            Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
         }
     }
 }

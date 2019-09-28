@@ -106,6 +106,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// </summary>
         private ApplicationMode m_CurrentMode = ApplicationMode.Ready;
 
+
         /// <summary>
         /// The Network Manager.
         /// </summary>
@@ -123,6 +124,8 @@ namespace GoogleARCore.Examples.CloudAnchors
             Resolving,
         }
 
+        //linh add
+        private int prefabIndex; //to decide what object prefab will be created
         /// <summary>
         /// The Unity Awake() method.
         /// </summary>
@@ -174,60 +177,60 @@ namespace GoogleARCore.Examples.CloudAnchors
             }
 
             // If the player has not touched the screen then the update is complete.
-            Touch touch;
-            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-            {
-                return;
-            }
+            //Touch touch;
+            //if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+            //{
+            //    return;
+            //}
 
-            TrackableHit arcoreHitResult = new TrackableHit();
-            m_LastHitPose = null;
+            //TrackableHit arcoreHitResult = new TrackableHit();
+            //m_LastHitPose = null;
 
-            // Raycast against the location the player touched to search for planes.
-            if (Application.platform != RuntimePlatform.IPhonePlayer)
-            {
-                if (ARCoreWorldOriginHelper.Raycast(touch.position.x, touch.position.y,
-                        TrackableHitFlags.PlaneWithinPolygon, out arcoreHitResult))
-                {
-                    m_LastHitPose = arcoreHitResult.Pose;
-                }
-            }
-            else
-            {
-                Pose hitPose;
-                if (m_ARKit.RaycastPlane(
-                    ARKitFirstPersonCamera, touch.position.x, touch.position.y, out hitPose))
-                {
-                    m_LastHitPose = hitPose;
-                }
-            }
+            //// Raycast against the location the player touched to search for planes.
+            //if (Application.platform != RuntimePlatform.IPhonePlayer)
+            //{
+            //    if (ARCoreWorldOriginHelper.Raycast(touch.position.x, touch.position.y,
+            //            TrackableHitFlags.PlaneWithinPolygon, out arcoreHitResult))
+            //    {
+            //        m_LastHitPose = arcoreHitResult.Pose;
+            //    }
+            //}
+            //else
+            //{
+            //    Pose hitPose;
+            //    if (m_ARKit.RaycastPlane(
+            //        ARKitFirstPersonCamera, touch.position.x, touch.position.y, out hitPose))
+            //    {
+            //        m_LastHitPose = hitPose;
+            //    }
+            //}
 
-            // If there was an anchor placed, then instantiate the corresponding object.
-            if (m_LastHitPose != null)
-            {
-                // The first touch on the Hosting mode will instantiate the origin anchor. Any
-                // subsequent touch will instantiate a star, both in Hosting and Resolving modes.
-                if (_CanPlaceStars())
-                {
-                    _InstantiateStar();
-                }
-                else if (!m_IsOriginPlaced && m_CurrentMode == ApplicationMode.Hosting)
-                {
-                    if (Application.platform != RuntimePlatform.IPhonePlayer)
-                    {
-                        m_WorldOriginAnchor =
-                            arcoreHitResult.Trackable.CreateAnchor(arcoreHitResult.Pose);
-                    }
-                    else
-                    {
-                        m_WorldOriginAnchor = m_ARKit.CreateAnchor(m_LastHitPose.Value);
-                    }
+            //// If there was an anchor placed, then instantiate the corresponding object.
+            //if (m_LastHitPose != null)
+            //{
+            //    // The first touch on the Hosting mode will instantiate the origin anchor. Any
+            //    // subsequent touch will instantiate a star, both in Hosting and Resolving modes.
+            //    if (_CanPlaceStars())
+            //    {
+            //        _InstantiateStar();
+            //    }
+            //    else if (!m_IsOriginPlaced && m_CurrentMode == ApplicationMode.Hosting)
+            //    {
+            //        if (Application.platform != RuntimePlatform.IPhonePlayer)
+            //        {
+            //            m_WorldOriginAnchor =
+            //                arcoreHitResult.Trackable.CreateAnchor(arcoreHitResult.Pose);
+            //        }
+            //        else
+            //        {
+            //            m_WorldOriginAnchor = m_ARKit.CreateAnchor(m_LastHitPose.Value);
+            //        }
 
-                    SetWorldOrigin(m_WorldOriginAnchor.transform);
-                    _InstantiateAnchor();
-                    OnAnchorInstantiated(true);
-                }
-            }
+            //        SetWorldOrigin(m_WorldOriginAnchor.transform);
+            //        _InstantiateAnchor();
+            //        OnAnchorInstantiated(true);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -336,7 +339,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         {
             if (m_CurrentMode == ApplicationMode.Hosting)
             {
-                UIController.ShowDebugMessage("Find a plane, tap to create a Cloud Anchor.");
+                UIController.ShowDebugMessage("Find a plane, then place the first item as a Cloud Anchor.");
             }
             else if (m_CurrentMode == ApplicationMode.Resolving)
             {
@@ -366,7 +369,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         {
             // The anchor will be spawned by the host, so no networking Command is needed.
             GameObject.Find("LocalPlayer").GetComponent<LocalPlayerController>()
-                .SpawnAnchor(Vector3.zero, Quaternion.identity, m_WorldOriginAnchor);
+                .SpawnAnchor(Vector3.zero, Quaternion.identity, m_WorldOriginAnchor, prefabIndex);
         }
 
         /// <summary>
@@ -376,7 +379,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         {
             // Star must be spawned in the server so a networking Command is used.
             GameObject.Find("LocalPlayer").GetComponent<LocalPlayerController>()
-                .CmdSpawnStar(m_LastHitPose.Value.position, m_LastHitPose.Value.rotation);
+                .CmdSpawnStar(m_LastHitPose.Value.position, m_LastHitPose.Value.rotation, prefabIndex);
         }
 
         /// <summary>
@@ -492,6 +495,41 @@ namespace GoogleARCore.Examples.CloudAnchors
         private void _DoQuit()
         {
             Application.Quit();
+        }
+
+        //linh modified
+        public void onCreateObject()
+        {
+            TrackableHit arcoreHitResult = new TrackableHit();
+            //m_LastHitPose = null;
+            if (ARCoreWorldOriginHelper.Raycast(Screen.width / 2, Screen.height / 2,
+                        TrackableHitFlags.PlaneWithinPolygon, out arcoreHitResult))
+            {
+                m_LastHitPose = arcoreHitResult.Pose;
+            }
+            // If there was an anchor placed, then instantiate the corresponding object.
+            if (m_LastHitPose != null)
+            {
+                // The first touch on the Hosting mode will instantiate the origin anchor. Any
+                // subsequent touch will instantiate a star, both in Hosting and Resolving modes.
+                if (_CanPlaceStars())
+                {
+                    _InstantiateStar();
+                }
+                else if (!m_IsOriginPlaced && m_CurrentMode == ApplicationMode.Hosting)
+                {
+                    m_WorldOriginAnchor = arcoreHitResult.Trackable.CreateAnchor(arcoreHitResult.Pose);
+
+                    SetWorldOrigin(m_WorldOriginAnchor.transform);
+                    _InstantiateAnchor();
+                    OnAnchorInstantiated(true);
+                }
+            }
+        }
+        //linh add
+        public void SetObjectPrefabIndex(int index)
+        {
+            prefabIndex = index;
         }
     }
 }
