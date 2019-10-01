@@ -1350,7 +1350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &647534862
 Transform:
   m_ObjectHideFlags: 0
@@ -3435,17 +3435,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resultText: {fileID: 1694305507}
   recordButton: {fileID: 1915731971}
-  scanImageButton: {fileID: 0}
-  furnitureButton: {fileID: 0}
-  openCollectionButton: {fileID: 0}
-  sofaButton: {fileID: 0}
-  chairButton: {fileID: 0}
-  placeButton: {fileID: 0}
-  measureButton: {fileID: 0}
-  clearButton: {fileID: 0}
-  gridButton: {fileID: 0}
-  selectButton: {fileID: 0}
-  deleteButton: {fileID: 0}
+  scanImageButton: {fileID: 1923468221}
+  furnitureButton: {fileID: 1644378741}
+  openCollectionButton: {fileID: 221157946}
+  sofaButton: {fileID: 335709620}
+  chairButton: {fileID: 1145486493}
+  placeButton: {fileID: 1353292522}
+  measureButton: {fileID: 1007950030}
+  clearButton: {fileID: 1005024548}
+  gridButton: {fileID: 1426784043}
+  selectButton: {fileID: 613603698}
+  deleteButton: {fileID: 1591889445}
 --- !u!4 &1294836947
 Transform:
   m_ObjectHideFlags: 0
